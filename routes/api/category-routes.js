@@ -49,11 +49,43 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  /* req.body should look like this...
+    {
+      category_name: "Shoes"
+    }
+  */
   // create a new category
+  Category.create(req.body)
+  .then(dbCateData => {
+    if (!dbCateData) {
+      res.status(404).json({ message: 'Cannot add category' });
+      return;
+    }
+      res.json(dbCateData);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+  })
 });
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
+  Category.update(req.body,{
+    where: {
+      id: req.params.id
+    }
+  }).then(dbCateData => {
+      if (!dbCateData) {
+        res.status(404).json({ message: 'Cannot update category' });
+        return;
+      }
+        res.json(dbCateData);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    })
 });
 
 router.delete('/:id', (req, res) => {

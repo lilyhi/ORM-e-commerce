@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     include: [
       {
         model: Category,
-        attributes: ['id', 'category_id']
+        attributes: ['id', 'category_name']
       },
       {
         model: Tag,
@@ -30,14 +30,14 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  Category.findOne({
+  Product.findOne({
     where: {
       id: req.params.id
     },
     include: [
       {
         model: Category,
-        attributes: ['id', 'category_id']
+        attributes: ['id', 'category_name']
       },
       {
         model: Tag,
@@ -60,13 +60,6 @@ router.get('/:id', (req, res) => {
 
 // create new product
 router.post('/', (req, res) => {
-  
-// -------------IM NOT SURE ABOUT THIS ONE IS IT DONE? --------
-    // product_name: req.body.product_name,
-    // price: req.body.price,
-    // stock: req.body.stock,
-    // tagIds: req.body.tagIds
-
   /* req.body should look like this...
     {
       product_name: "Basketball",
